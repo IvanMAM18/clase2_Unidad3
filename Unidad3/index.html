@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue JS</title>
+
+    <!--enlazar vue JS//-->
+    <script src="https://unpkg.com/vue@3"></script>
+
+</head>
+<body>
+    <!--crear contenedor-->
+    <div id="contenedor"> 
+         <form>
+            ><fieldset>
+                <legend>
+                    Acceso al panel
+                </legend>
+                <label>
+                    Correo electronico
+                </label>
+                <input type="email" v-model="email" name="">
+                <label>
+                    Password
+                </label>
+                <input type="password" v-model="password" name="">
+                <button @click="login">
+                    Acceder
+                </button>
+            </fieldset>
+         </form>
+    </div>
+    
+    <script type="text/javascript">
+        
+        const{createApp}=Vue;
+        const app = createApp({
+            data() {
+                return {
+                    
+                    users:null,
+                    email:'',
+                    password:''
+                }
+            },
+            methods:{
+                login(e){
+                    e.preventDefault();
+
+                    var email_users=this.email;
+                    var password_users=this.password;
+
+                    var access = this.users.map (function(u){
+                        
+                        if(email_users == u.email.toLowerCase()){
+                            
+                            if(password_users === u.password){
+                                 return true;   
+                            }
+
+                        }
+                    })
+                    console.log(access);
+                }
+            },
+            mounted(){
+                fetch('users.json')
+                .then((res) => res.json())
+                .then((json) => (this.users = json))
+                .catch((err) => (error.value = err))
+                
+            }
+        }).mount('#contenedor')
+    </script>
+</body>
+</html>
